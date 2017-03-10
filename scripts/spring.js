@@ -22,10 +22,23 @@ var Spring = function(a, b, length, c) {
     var getP2 = function() {
         return p2;
     }
+    var setLength = function(newLength) {
+        length = newLength;
+    };
+    var getConstant = function() {
+        return c;
+    };
+    var setConstant = function(newC) {
+        line.strokeColor = new Color(1 - (newC / .1));
+        c = newC;
+    };
     return {
         update: update,
         line: line,
         p1 : getP1,
         p2 : getP2,
+        setLength: setLength,
+        getConstant: getConstant,
+        setConstant: setConstant,
     };
 }
