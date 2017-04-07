@@ -9,11 +9,11 @@ function resetGrid() {
         points = [];
         springs = [];
     }
-    
+
     meshSize = view.bounds.width / 40;
     w = (view.bounds.width/meshSize) + 1;
     h = (view.bounds.height/meshSize) + 1;
-    
+
     for (var i=0; i<w; i++) {
         if (!initialized) {
             points[i]=[];
@@ -27,7 +27,7 @@ function resetGrid() {
 //            }
         }
     }
-    
+
     springLength = meshSize/2;
     springConstant = .1;
     if (!initialized) {
@@ -53,12 +53,12 @@ function resetGrid() {
 }
 
 window.onload = function() {
-    
+
     var canvas = document.getElementById("canvas");
     paper.setup(canvas);
-    
+
     resetGrid();
-    
+
     view.onFrame = function(event) {
         for (var i=1; i<w-1; i++) {
             for (var j=1; j<h-1; j++) {
@@ -69,7 +69,7 @@ window.onload = function() {
             springs[i].update();
         }
     }
-    
+
     view.onResize = function(event) {
         var newMeshSize = view.bounds.width / 40;
         var meshRatio = newMeshSize / meshSize;
@@ -83,14 +83,14 @@ window.onload = function() {
         }
         meshSize = newMeshSize;
     }
-    
+
     var tool = new Tool();
     tool.onMouseDrag = function(event) {
         for (var i=0; i<springs.length; i++) {
             var spring = springs[i];
             if (intersect(spring.p1(), spring.p2(), event.lastPoint, event.point) && Math.random() < .9) {
-//                    spring.setConstant(spring.getConstant() * .5);
-                spring.setConstant(0);
+                    spring.setConstant(Math.max(spring.getConstant() - springConstant*.4, 0));
+//                spring.setConstant(0);
 //                spring.line.remove();
 //                springs.splice(i, 1);
             }
